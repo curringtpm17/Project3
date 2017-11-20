@@ -4,40 +4,56 @@ import java.util.*;
 
 public class Project3 {
 
-	public static int privateKey(int b, int p, int q){
-		
+	 public static int gcdExtended(int b, int f, int g)
+	 {
 		//variables to find a
-		int r=0;
-		int s=0;
-		
-		//find a
-		r = p-1;
-		s = q-1;
-		int a = r*s;
-	
-		//base case
-		if(b == 0){
-			return a;
-		}
-		
-		//y is the same private key as d
-		int y = privateKey(b%a, p, q);
-		
-		return y;
-		
+			int h=0;
+			int i=0;
+			
+			//find a
+			i = f-1;
+			h = g-1;
+			int a = h*i;
+			
+		 //a is phi n b is public key  e
+		 int x = 0, y = 1, lastx = 1, lasty = 0, temp;
+	     while (b != 0)
+	     {
+	         int q = a / b;
+	         int r = a % b;
+	 
+	         a = b;
+	         b = r;
+	 
+	         temp = x;
+	         x = lastx - q * x;
+	         lastx = temp;
+	 
+	         temp = y;
+	         y = lasty - q * y;
+	         lasty = temp;            
+	     }
+	     
+	     if(lasty > 0)
+	    	 return lasty;
+	     else
+	    	 return lastx;
+
+	    
 	}
+
 	public static void main(String[] args) {
 
 		int b = 0;
-		int p  = 11;
-		int	q = 5;
+		int p  = 17;
+		int	q = 11;
 		
-		Scanner s = new Scanner(System.in);
+		Scanner sc = new Scanner(System.in);
 		System.out.println("Please enter the value of the public key: ");
-		b = s.nextInt();
+		b = sc.nextInt();
 		
-		int d = privateKey(b, p, q);
-		System.out.println(d);
+		int d = gcdExtended(b, p, p);
+		System.out.println("Your private key is: " +d);
 
 	}
 
